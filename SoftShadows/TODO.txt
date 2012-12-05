@@ -1,0 +1,9 @@
+Execptions and asserts don't work properly. Interfering with wxWidgets?
+Replace Eigen with glm. Eigen's headers can't be precompiled and make compilation slow. We don't need all of Eigen's functionality anyway.
+Allow users to add multiple lights and move them around.
+Improve the UI.
+Different materials/shaders.
+Saving/loading scene arrangements. Use Boost serialization.
+Basic ambient occlusion.
+Back casting ambient occlusion.
+Move over to Visual Studio 2012. Use some more C++11 stuff (eg replace Boost for_each with range based for loops, which were added to VS 2012).

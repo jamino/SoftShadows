@@ -15,9 +15,11 @@
 //
 // Contains common headers that are included by all files, but are too big/too
 // complicated to be precompiled by Visual Studio.
+//
 // TODO: It's only Eigen that VS struggles with. Maybe use glm or roll our own
 //		instead, the stuff we need only represents a small fraction of Eigen.
 ///////////////////////////////////////////////////////////////////////////////
+
 #pragma once
 
 

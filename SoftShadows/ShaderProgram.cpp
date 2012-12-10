@@ -27,19 +27,25 @@ ShaderProgram::ShaderProgram( const string & name,
 							  const std::shared_ptr< FragmentShader > & pFragmentShader,
 							  const std::shared_ptr< GeometryShader > & pGeometryShader )
 	: Asset( name )
-	, m_Id( glCreateProgram() )
+	, m_Id( glCreateProgram() )			// Create an OpenGL program object and save the unique ID value that the GL assigned to it.
 	, m_pVertexShader( pVertexShader )
 	, m_pFragmentShader( pFragmentShader )
 	, m_pGeometryShader( pGeometryShader )
 {
+	// Attach the vertex and fragment shaders.
 	glAttachShader( m_Id, m_pVertexShader->GetId() );
 	glAttachShader( m_Id, m_pFragmentShader->GetId() );
 
+	// Attach the geometry shader if one was specified.
 	if( m_pGeometryShader )
 		glAttachShader( m_Id, m_pGeometryShader->GetId() );
 
+	// Link the shaders into a program.
 	Link();
 
+	// Shader programs are currently only created from code and not loaded from
+	// a file so we need to insert them into the respective asset cache manually.
+	// TODO: This is messy, change this.
 	auto * const ptr = & GetScene().GetAssetSet< ShaderProgram >();
 
 	GetScene().GetAssetSet< ShaderProgram >().insert( * this );
@@ -48,26 +54,35 @@ ShaderProgram::ShaderProgram( const string & name,
 
 void ShaderProgram::Link()
 {
+	// Link the program.
 	glLinkProgram( m_Id );
 
+	// See if we got any info back from the GL.
 	GLint infoLogLength = 0;
 	glGetProgramiv( m_Id, GL_INFO_LOG_LENGTH, & infoLogLength );
 
 	if( infoLogLength > 0 )
 	{
+		// Got some info back, add it to the log.
 		vector< char > infoLog( infoLogLength );
 		glGetProgramInfoLog( m_Id, infoLogLength, nullptr, & infoLog.front() );
 		clog << & infoLog.front() << endl;
 	}
 
+	// Check if the link was successful.
 	GLint linkStatus = GL_FALSE;
 	glGetProgramiv( m_Id, GL_LINK_STATUS, & linkStatus );
 
 	if( linkStatus != GL_TRUE )
-		throw runtime_error( "Failed to linker shader program" );
+		// There was an error linking the program, throw an exception.
+		// TODO: Might be better to pop up an error box rather than throw an
+		//		exception here. Logging an error gives the user a chance to fix
+		//		the shader files and re-compile them.
+		throw runtime_error( "Failed to link shader program" );
 }
 
 
+// Sets this as the current program used for rendering.
 void ShaderProgram::SetCurrent()
 {
 	glUseProgram( m_Id );

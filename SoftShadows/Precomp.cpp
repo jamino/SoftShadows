@@ -12,6 +12,14 @@
 // WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION
 // OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN
 // CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+//
+// This file is used to generate the precompiled header in Visual Studio. I
+// also use it to tell the compiler what libraries to link with. I feel this is
+// better than hiding it away in a compiler specific project file. The hope is
+// to make this as platform/compiler independent as possible.
+//
+// TODO: Test this on different platforms/compilers and fix as necessary. It's
+//		probably a bit specific to my setup.
 ///////////////////////////////////////////////////////////////////////////////
 
 #include "Precomp.hpp"

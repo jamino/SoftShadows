@@ -19,14 +19,23 @@
 
 #include "Texture.hpp"
 
+// TODO: Move this into the precompiled header.
 #include <Magick++.h>
 
 #include "Scene.hpp"
 
 
+// We use GraphicsMagick to do all the hard work of loading an image from a
+// file.
 using namespace Magick;
 
 
+// Useful little class template that maps C++ types to their respective integer
+// type IDs in OpenGL. This is useful when you are eg given a bitmap of
+// SomeType[]. You can then do a glTexImage2D specifiying
+// GetGlTypeId< SomeType >::value as the image format parameter, which will
+// automatically work if SomeType changes in future.
+// TODO: This class doesn't belong here, maybe we need a GlHelpers.hpp header?
 template< typename >
 struct GetGlTypeId;
 
@@ -46,10 +55,14 @@ Texture::Texture( const string & fileName )
 {
 	clog << "Loading texture " << fileName << endl;
 
+	// Use GraphicsMagick to load the image from the file.
 	const Image image( fileName );
 
+	// Create a texture object in OpenGL.
 	glGenTextures( 1, & m_Id );
 	glBindTexture( GL_TEXTURE_2D, m_Id );
+
+	// Use linear filtering as we're not using mip-maps.
 	glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
 	glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
 
@@ -61,16 +74,17 @@ Texture::Texture( const string & fileName )
 #	error( "Unsupported image format, expected RGBA or BGRA" )
 #endif
 
+	// Transfer image data to the GL.
 	glTexImage2D(
-		GL_TEXTURE_2D,
-		0,
-		4,
-		image.columns(),
-		image.rows(),
-		0,
-		MAGICK_GL_FORMAT,
-		GetGlTypeId< Quantum >::value,
-		image.getConstPixels( 0, 0, image.columns(), image.rows() )
+		GL_TEXTURE_2D,		// All textures are simple 2D in this app.
+		0,					// Level-of-detail 0, no mip-mapping in this app either.
+		GL_RGBA8,			// The internal format that OpenGL will use to store the texture. OpenGL converts the image to this format if necessary. We'll just use standard 32-bit RGBA true colour (8-bits per channel) for simplicity.
+		image.columns(),	// Width of the texture.
+		image.rows(),		// Height of the texture.
+		0,					// Texture border width. Not used by OpenGL anymore, should always be zero.
+		MAGICK_GL_FORMAT,	// The format of the image data. GraphicsMagick is always either RGBA or BGRA depending on the value of a preprocessor constant (see above).
+		GetGlTypeId< Quantum >::value,	// The data type of pixels in the image. This is dictated by the GraphicsMagick "Quantum" type. Note that OpenGL wants an integer constant to identify the type, hence the use of GetGlTypeId.
+		image.getConstPixels( 0, 0, image.columns(), image.rows() )		// And finally, give OpenGL a pointer to the actual image data.
 	);
 }
 

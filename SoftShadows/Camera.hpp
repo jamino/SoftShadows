@@ -13,7 +13,7 @@
 // OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN
 // CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 //
-// A Camera controls viewing of a scene. Just like a real cmaera, it has a
+// A Camera controls viewing of a scene. Just like a real camera, it has a
 // position and orientation relative to the scene, as well as a field-of-view.
 // Unlike a real camera, it also has near and far clipping planes, which are
 // necessary due to the limited precision of maths on computers. In terms of
@@ -21,6 +21,7 @@
 // controls how objects in 3D space will get mapped to pixels in the 2D
 // viewport (eg screen/application window).
 ///////////////////////////////////////////////////////////////////////////////
+
 #pragma once
 
 

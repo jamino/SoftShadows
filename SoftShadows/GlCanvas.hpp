@@ -16,11 +16,15 @@
 // A GlCanvas is a window in wxWidgets that can be drawn to using OpenGL. This
 // class extends the base wxWidgets class with some app specific features for
 // moving the camera with the WASD keys and doing mouse-look.
+//
 // TODO: De-couple movement code from this class.
 // TODO: Always use the 60Hz timer whenever we want to redraw? Eg currently,
 //		mouse-look and OnPaint use immediate rendering, which can block other
 //		movement.
+// TODO: Sometimes mouse buttons and movement keys when the app loses focus.
+//		Not sure why this is yet.
 ///////////////////////////////////////////////////////////////////////////////
+
 #pragma once
 
 
@@ -47,7 +51,7 @@ public:
 	EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 
 private:
-	// Movement keys.
+	// Keys that the user can press to move the camera around.
 	// TODO: Should be user configurable.
 	enum
 	{
@@ -123,17 +127,29 @@ private:
 	//		event, use RenderImmediate instead.
 	void						Render();
 
+	// These next 2 lines use Boost funkiness to get the highest value movement
+	// key as a compile time constant, which can then be used as the size for
+	// an array. The array is used to track what movement keys are currently
+	// pressed. Bit of an experiment on my part to see if I could make the
+	// array as big as necessary, but no bigger, without having to hard-code
+	// it.
+	// TODO: Clever, but complicated, plus allowing users to reconfigure the
+	//		controls will require a different solution.
 	typedef mpl::vector_c< int, MoveKey_Forwards, MoveKey_Backwards, MoveKey_Left, MoveKey_Right, MoveKey_Up, MoveKey_Down > KeyCodes;
 
 	static const int MaxKeyCode = mpl::deref< mpl::max_element< KeyCodes >::type >::type::value;
 
-	unique_ptr< Viewport >		m_pViewport;
-	wxTimer						m_UpdateTimer;
-	wxStopWatch					m_UpdateWatch;
-	bitset< MaxKeyCode + 1 >	m_KeyDownBits;
-	wxPoint						m_LastMousePos;
-	int							m_NumKeysDown;
+	unique_ptr< Viewport >		m_pViewport;		// The viewport associated with this canvas.
+	wxTimer						m_UpdateTimer;		// The 60Hz timer used to update movement and redraw the scene.
+	wxStopWatch					m_UpdateWatch;		// We use this to check the length of the 60Hz timer event as we might get it late depending on system load.
+	bitset< MaxKeyCode + 1 >	m_KeyDownBits;		// Records what movement keys are currently held down.
+	wxPoint						m_LastMousePos;		// Records the position of the mouse the last time we updated the camera. We use this to work out mow much it has moved.
+	int							m_NumKeysDown;		// The number of movement keys that are currently held down. When this is zero we may not need to update the camera/redraw.
 
+	// This array specifies the OpenGL related attributes used when creating a
+	// GL canvas (eg bits-per-pixel, depth bits, stencil bits, etc.). They are
+	// the same for every GL canvas in this app, hence why it's a static
+	// constant.
 	static const int			m_gGlAttributes[];
 
 	DECLARE_EVENT_TABLE()

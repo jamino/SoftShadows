@@ -12,6 +12,9 @@
 // WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION
 // OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN
 // CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+//
+// Very basic C++ wrapper class for an OpenGL 2D texture object. Doesn't do
+// much other than loading a texture from a file.
 ///////////////////////////////////////////////////////////////////////////////
 
 #pragma once
@@ -20,14 +23,21 @@
 #include "Asset.hpp"
 
 
+///////////////////////////////////////////////////////////////////////////////
+// Texture class
+///////////////////////////////////////////////////////////////////////////////
 class Texture : public Asset< Texture >
 {
 public:
+	// Binds this texture to the active texture unit (ie just calls
+	// glBindTexture).
 	void				Bind();
 
 private:
+	// The constructor loads a texture from the specified file.
 						Texture( const string & fileName );
 
+	// The OpenGL ID reserved for this texture object.
 	GLuint				m_Id;
 
 	friend class Scene;

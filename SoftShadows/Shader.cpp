@@ -23,9 +23,10 @@
 
 
 ShaderBase::ShaderBase( const string & fileName, const GLenum typeEnum )
-	: m_Id		( glCreateShader( typeEnum ) )
+	: m_Id		( glCreateShader( typeEnum ) )		// Create an OpenGL shader object and save the unique ID value that the GL assigned to it.
 	, m_TypeEnum( typeEnum )
 {
+	// Load the shader from the file.
 	Load( fileName );
 }
 
@@ -49,22 +50,39 @@ void ShaderBase::Load( const string & fileName )
 	glShaderSource( m_Id, 1, & pString, & size );
 	glCompileShader( m_Id );
 
+	// See if we got any info back.
 	GLint infoLogLength = 0;
 	glGetShaderiv( m_Id, GL_INFO_LOG_LENGTH, & infoLogLength );
 
 	if( infoLogLength > 0 )
 	{
+		// We got some info back, add it to the log.
 		vector< char > infoLog( infoLogLength );
 		glGetShaderInfoLog( m_Id, infoLogLength, nullptr, & infoLog.front() );
 		clog << & infoLog.front() << endl;
 	}
 
+	// Check if the shader compiled successfully.
 	GLint compileStatus = GL_FALSE;
 	glGetShaderiv( m_Id, GL_COMPILE_STATUS, & compileStatus );
 
 	if( compileStatus != GL_TRUE )
+		// There was an error compiling the shader, throw an exception.
+		// TODO: Might be better to pop up an error box rather than throw an
+		//		exception here. Logging an error gives the user a chance to fix
+		//		the shader file and reload it.
 		throw runtime_error( "Failed to compile shader" );
 }
+
+
+GeometryShader::GeometryShader( const string & fileName )
+	: ShaderBase( fileName, GL_GEOMETRY_SHADER )
+	, Asset< GeometryShader >( fileName )
+{}
+
+
+GeometryShader::~GeometryShader()
+{}
 
 
 VertexShader::VertexShader( const string & fileName )
@@ -84,14 +102,4 @@ FragmentShader::FragmentShader( const string & fileName )
 
 
 FragmentShader::~FragmentShader()
-{}
-
-
-GeometryShader::GeometryShader( const string & fileName )
-	: ShaderBase( fileName, GL_GEOMETRY_SHADER )
-	, Asset< GeometryShader >( fileName )
-{}
-
-
-GeometryShader::~GeometryShader()
 {}

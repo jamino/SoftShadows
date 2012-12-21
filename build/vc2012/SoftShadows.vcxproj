@@ -11,7 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{2D009F58-1300-4EA9-BE5E-29E3B62D1106}</ProjectGuid>
+    <ProjectGuid>{3610E01E-305C-40D4-A097-4343F7F4E050}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>SoftShadows</RootNamespace>
   </PropertyGroup>
@@ -19,11 +19,13 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v110</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v110</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
@@ -74,54 +76,53 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Application.cpp" />
-    <ClCompile Include="Camera.cpp" />
-    <ClCompile Include="GlCanvas.cpp" />
-    <ClCompile Include="Light.cpp" />
-    <ClCompile Include="MainWindow..cpp" />
-    <ClCompile Include="Material.cpp" />
-    <ClCompile Include="Mesh.cpp" />
-    <ClCompile Include="MeshInstance.cpp" />
-    <ClCompile Include="Precomp.cpp">
+    <ClCompile Include="..\..\src\Application.cpp" />
+    <ClCompile Include="..\..\src\Camera.cpp" />
+    <ClCompile Include="..\..\src\GlCanvas.cpp" />
+    <ClCompile Include="..\..\src\Light.cpp" />
+    <ClCompile Include="..\..\src\MainWindow.cpp" />
+    <ClCompile Include="..\..\src\Material.cpp" />
+    <ClCompile Include="..\..\src\Mesh.cpp" />
+    <ClCompile Include="..\..\src\MeshInstance.cpp" />
+    <ClCompile Include="..\..\src\Precomp.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="Scene.cpp" />
-    <ClCompile Include="SceneNode.cpp" />
-    <ClCompile Include="Shader.cpp" />
-    <ClCompile Include="ShaderProgram.cpp" />
-    <ClCompile Include="Texture.cpp" />
-    <ClCompile Include="Viewport.cpp" />
+    <ClCompile Include="..\..\src\Scene.cpp" />
+    <ClCompile Include="..\..\src\SceneNode.cpp" />
+    <ClCompile Include="..\..\src\Shader.cpp" />
+    <ClCompile Include="..\..\src\ShaderProgram.cpp" />
+    <ClCompile Include="..\..\src\Texture.cpp" />
+    <ClCompile Include="..\..\src\Viewport.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Application.hpp" />
-    <ClInclude Include="Asset.hpp" />
-    <ClInclude Include="Camera.hpp" />
-    <ClInclude Include="Common.hpp" />
-    <ClInclude Include="GlCanvas.hpp" />
-    <ClInclude Include="Light.hpp" />
-    <ClInclude Include="MainWindow.hpp" />
-    <ClInclude Include="Material.hpp" />
-    <ClInclude Include="Mesh.hpp" />
-    <ClInclude Include="MeshInstance.hpp" />
-    <ClInclude Include="List.hpp" />
-    <ClInclude Include="Precomp.hpp" />
-    <ClInclude Include="Scene.hpp" />
-    <ClInclude Include="SceneNode.hpp" />
-    <ClInclude Include="Shader.hpp" />
-    <ClInclude Include="ShaderProgram.hpp" />
-    <ClInclude Include="Texture.hpp" />
-    <ClInclude Include="Viewport.hpp" />
+    <ClInclude Include="..\..\src\Application.hpp" />
+    <ClInclude Include="..\..\src\Asset.hpp" />
+    <ClInclude Include="..\..\src\Camera.hpp" />
+    <ClInclude Include="..\..\src\Common.hpp" />
+    <ClInclude Include="..\..\src\GlCanvas.hpp" />
+    <ClInclude Include="..\..\src\Light.hpp" />
+    <ClInclude Include="..\..\src\List.hpp" />
+    <ClInclude Include="..\..\src\MainWindow.hpp" />
+    <ClInclude Include="..\..\src\Material.hpp" />
+    <ClInclude Include="..\..\src\Mesh.hpp" />
+    <ClInclude Include="..\..\src\MeshInstance.hpp" />
+    <ClInclude Include="..\..\src\Precomp.hpp" />
+    <ClInclude Include="..\..\src\Scene.hpp" />
+    <ClInclude Include="..\..\src\SceneNode.hpp" />
+    <ClInclude Include="..\..\src\Shader.hpp" />
+    <ClInclude Include="..\..\src\ShaderProgram.hpp" />
+    <ClInclude Include="..\..\src\Texture.hpp" />
+    <ClInclude Include="..\..\src\Viewport.hpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="GBuffer.FragmentShader.glsl" />
-    <None Include="GBuffer.VertexShader.glsl" />
-    <None Include="Lighting.FragmentShader.glsl" />
-    <None Include="Lighting.VertexShader.glsl" />
-    <None Include="Shadow.FragmentShader.glsl" />
-    <None Include="Shadow.GeometryShader.glsl" />
-    <None Include="Shadow.VertexShader.glsl" />
-    <None Include="TODO.txt" />
+    <None Include="..\..\src\GBuffer.FragmentShader.glsl" />
+    <None Include="..\..\src\GBuffer.VertexShader.glsl" />
+    <None Include="..\..\src\Lighting.FragmentShader.glsl" />
+    <None Include="..\..\src\Lighting.VertexShader.glsl" />
+    <None Include="..\..\src\Shadow.FragmentShader.glsl" />
+    <None Include="..\..\src\Shadow.GeometryShader.glsl" />
+    <None Include="..\..\src\Shadow.VertexShader.glsl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

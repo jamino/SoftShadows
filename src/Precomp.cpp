@@ -25,7 +25,6 @@
 #include "Precomp.hpp"
 
 
-#pragma comment( lib, "assimp.lib" )
 #pragma comment( lib, "opengl32.lib" )
 
 
@@ -48,6 +47,7 @@
 #	pragma comment( lib, "CORE_DB_xlib_.lib" )
 #	pragma comment( lib, "CORE_DB_zlib_.lib" )
 #	pragma comment( lib, "CORE_DB_wmf_.lib" )
+#	pragma comment( lib, "assimp_debug_Win32/assimp.lib" )
 #else
 #	pragma comment( lib, "glew32s.lib" )
 #	pragma comment( lib, "CORE_RL_bzlib_.lib" )
@@ -67,4 +67,5 @@
 #	pragma comment( lib, "CORE_RL_xlib_.lib" )
 #	pragma comment( lib, "CORE_RL_zlib_.lib" )
 #	pragma comment( lib, "CORE_RL_wmf_.lib" )
+#	pragma comment( lib, "assimp_release_Win32/assimp.lib" )
 #endif
